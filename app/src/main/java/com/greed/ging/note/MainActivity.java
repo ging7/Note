@@ -1,5 +1,7 @@
 package com.greed.ging.note;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,15 +16,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private ListView item_list;
     private TextView show_app_name;
 
-    //ListView元件設定三筆資料
-    private static final String[] data = {"關於Android",
-            "可愛的小狗狗!",
-            "好聽的音樂！"};
+    //換掉原來的字串陣列
+    private ArrayList<String> data = new ArrayList<>();
     private ArrayAdapter<String> adapter;
 
     @Override
@@ -33,15 +35,46 @@ public class MainActivity extends AppCompatActivity {
         findViews();
         processControllers();
 
+        // 加入範例資料
+        data.add("關於Note筆記本");
+        data.add("一隻非常可愛的小狗狗!");
+        data.add("一首非常好聽的音樂！");
+
         int layoutId = android.R.layout.simple_list_item_1;
         adapter = new ArrayAdapter<String>(this, layoutId, data);
-        ListView item_list = (ListView) findViewById(R.id.item_list);
         item_list.setAdapter(adapter);
     }
+
+
 
     private void findViews(){
         item_list = (ListView)findViewById(R.id.item_list);
         show_app_name = (TextView) findViewById(R.id.show_app_name);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK){
+            String titleText = data.getStringExtra("titleText");
+
+            // 如果是新增記事
+            if (requestCode == 0){
+                // 通知資料已經改變，ListView元件才會重新顯示
+                adapter.notifyDataSetChanged();
+            }
+            // 如果是修改記事
+            else if (requestCode == 1) {
+                // 讀取記事編號
+                int position = data.getIntExtra("position", -1);
+
+                if (position != -1) {
+                    // 設定標題項目
+                    this.data.set(position, titleText);
+                    // 通知資料已經改變，ListView元件才會重新顯示
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
     }
 
     private void processControllers(){
@@ -53,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
             // 第四個參數在這裡沒有用途
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this,
-                        data[position], Toast.LENGTH_SHORT).show();
+
             }
         };
         // 註冊選單項目點擊監聽物件
@@ -68,8 +100,9 @@ public class MainActivity extends AppCompatActivity {
             // 第四個參數在這裡沒有用途
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // 換掉「data[position]」
                 Toast.makeText(MainActivity.this,
-                        "Long: " + data[position], Toast.LENGTH_LONG).show();
+                        "Long: " + data.get(position), Toast.LENGTH_LONG).show();
                 return false;
             }
         };
@@ -107,27 +140,27 @@ public class MainActivity extends AppCompatActivity {
         switch (itemId) {
             case R.id.search_item:
                 break;
+            // 使用者選擇新增選單項目
             case R.id.add_item:
+                // 使用Action名稱建立啟動另一個Activity元件需要的Intent物件
+                Intent intent = new Intent("com.greed.ging.note.ADD_ITEM");
+                // 呼叫「startActivityForResult」，，第二個參數「0」表示執行新增
+                startActivityForResult(intent, 0);
                 break;
             case R.id.revert_item:
                 break;
             case R.id.delete_item:
                 break;
         }
-        // 測試用的程式碼，完成測試後記得移除
-        android.app.AlertDialog.Builder dialog =
-                new android.app.AlertDialog.Builder(MainActivity.this);
-        dialog.setTitle("MenuItem Test")
-                .setMessage(item.getTitle())
-                .setIcon(item.getIcon())
-                .show();
     }
-    // 方法名稱與onClick的設定一樣，參數的型態是android.view.View
+    // 點擊應用程式名稱元件後呼叫的方法
     public void aboutApp(View view) {
-        // 顯示訊息框
-        // Context：通常指定為「this」；如果在巢狀類別中使用，要加上這個Activity元件類別的名稱，例如「元件類別名稱.this」
-        // String或int：設定顯示在訊息框裡面的訊息或文字資源
-        // int：設定訊息框停留在畫面的時間，使用宣告在Toast類別中的變數，可以設定為「LENGTH_LONG」和「LENGTH_SHORT」
-        Toast.makeText(this, R.string.app_name, Toast.LENGTH_LONG).show();
+        // 建立啟動另一個Activity元件需要的Intent物件
+        // 建構式的第一個參數：「this」
+        // 建構式的第二個參數：「Activity元件類別名稱.class」
+        Intent intent = new Intent(this, AboutActivity.class);
+        // 呼叫「startActivity」，參數為一個建立好的Intent物件
+        // 這行敘述執行以後，如果沒有任何錯誤，就會啟動指定的元件
+        startActivity(intent);
     }
 }
