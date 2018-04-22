@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MAT</string>
+    <string name="app_name">Note</string>
 
     <string name="title">標題</string>
     <string name="enter_title">輸入標題</string>

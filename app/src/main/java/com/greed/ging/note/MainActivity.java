@@ -86,7 +86,15 @@ public class MainActivity extends AppCompatActivity {
             // 第四個參數在這裡沒有用途
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // 使用Action名稱建立啟動另一個Activity元件需要的Intent物件
+                Intent intent = new Intent("com.greed.ging.note.EDIT_ITEM");
 
+                // 設定記事編號與標題
+                intent.putExtra("position", position);
+                intent.putExtra("titleText", data.get(position));
+
+                // 呼叫「startActivityForResult」，第二個參數「1」表示執行修改
+                startActivityForResult(intent, 1);
             }
         };
         // 註冊選單項目點擊監聽物件

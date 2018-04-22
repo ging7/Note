@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:stretchColumns="1"
     tools:context="com.greed.ging.note.ItemActivity">
 
     <TableRow>
@@ -37,12 +38,12 @@
 
         <EditText
             android:id="@+id/content_text"
-            android:hint="@string/enter_content"
-            android:layout_gravity="top"
             android:layout_height="200sp"
-            android:background="@drawable/rectangle_drawable"
-            android:padding="6sp"
+            android:layout_gravity="top"
             android:layout_margin="2sp"
+            android:background="@drawable/rectangle_drawable"
+            android:hint="@string/enter_content"
+            android:padding="6sp"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </TableRow>
 
