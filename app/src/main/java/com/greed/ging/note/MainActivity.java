@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView show_app_name;
 
     //換掉原來的字串陣列
-    private ArrayList<String> data = new ArrayList<>();
-    private ArrayAdapter<String> adapter;
+    //private ArrayList<String> data = new ArrayList<>();
+    //private ArrayAdapter<String> adapter;
 
     // ListView使用的自定Adapter物件
     private ItemAdapter itemAdapter;
@@ -161,8 +161,8 @@ public class MainActivity extends AppCompatActivity {
             public boolean onLongClick(View view) {
                 AlertDialog.Builder dialog =
                         new AlertDialog.Builder(MainActivity.this);
-                dialog.setTitle("R.string.app_name")
-                        .setMessage("R.string.about")
+                dialog.setTitle(R.string.app_name)
+                        .setMessage(R.string.about)
                         .show();
                 return false;
             }
