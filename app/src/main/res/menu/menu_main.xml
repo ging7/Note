@@ -31,4 +31,11 @@
         android:title="DELETE"
         app:showAsAction="always"
         android:onClick="clickMenuItem" />
+
+    <!-- 設定 -->
+    <item
+        android:title="Setting"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:onClick="clickPreferences" />
 </menu>

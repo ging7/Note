@@ -292,5 +292,11 @@ public class MainActivity extends AppCompatActivity {
         // 這行敘述執行以後，如果沒有任何錯誤，就會啟動指定的元件
         startActivity(intent);
     }
+
+    // 設定
+    public void clickPreferences(MenuItem item) {
+        // 啟動設定元件
+        startActivity(new Intent(this, PrefActivity.class));
+    }
 }
 

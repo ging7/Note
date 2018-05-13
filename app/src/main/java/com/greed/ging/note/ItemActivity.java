@@ -2,6 +2,8 @@ package com.greed.ging.note;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -71,7 +73,7 @@ public class ItemActivity extends AppCompatActivity {
         }
     }
 
-    private Colors getColors(int color) {
+    public static Colors getColors(int color) {
         Colors result = Colors.LIGHTGREY;
 
         if (color == Colors.BLUE.parseColor()) {
@@ -118,6 +120,12 @@ public class ItemActivity extends AppCompatActivity {
             // 新增記事
             else {
                 item.setDatetime(new Date().getTime());
+                // 建立SharedPreferences物件
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(this);
+                // 讀取設定的預設顏色
+                int color = sharedPreferences.getInt("DEFAULT_COLOR", -1);
+                item.setColor(getColors(color));
             }
 
             Intent result = getIntent();
