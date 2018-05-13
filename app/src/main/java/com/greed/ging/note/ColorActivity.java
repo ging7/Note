@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-public class ColorActivity extends AppCompatActivity {
+public class ColorActivity extends Activity {
 
     private LinearLayout color_gallery;
 
@@ -43,7 +42,7 @@ public class ColorActivity extends AppCompatActivity {
         color_gallery = (LinearLayout) findViewById(R.id.color_gallery);
     }
 
-    private class ColorListener implements View.OnClickListener {
+    private class ColorListener implements OnClickListener {
 
         @Override
         public void onClick(View view) {
@@ -63,12 +62,13 @@ public class ColorActivity extends AppCompatActivity {
                 finish();
             }
             // 經由新增或修改記事的元件啟動
-            Intent result = getIntent();
-            result.putExtra("colorId", view.getId());
-            setResult(Activity.RESULT_OK, result);
-            finish();
+            else {
+                Intent result = getIntent();
+                result.putExtra("colorId", view.getId());
+                setResult(Activity.RESULT_OK, result);
+                finish();
+            }
         }
-
     }
 
 }

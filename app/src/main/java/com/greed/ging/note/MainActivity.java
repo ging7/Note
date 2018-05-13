@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // 建立與顯示詢問是否刪除的對話框
-                android.app.AlertDialog.Builder d = new android.app.AlertDialog.Builder(this);
+                AlertDialog.Builder d = new android.app.AlertDialog.Builder(this);
                 String message = getString(R.string.delete_item);
                 d.setTitle(R.string.delete)
                         .setMessage(String.format(message, selectedCount));
